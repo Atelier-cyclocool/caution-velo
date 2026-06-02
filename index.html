@@ -4,277 +4,208 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Caution Vélo</title>
-
-<!-- PWA META -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Caution Vélo">
 <meta name="theme-color" content="#0D0D0D">
 <meta name="mobile-web-app-capable" content="yes">
-
+ 
 <script>
 const manifestData = {
-  name: "Caution Vélo",
-  short_name: "Caution 🚲",
+  name: "Caution Vélo", short_name: "Caution 🚲",
   description: "Gestion des cautions vélo via Stripe",
-  start_url: ".",
-  display: "standalone",
-  background_color: "#0D0D0D",
-  theme_color: "#0D0D0D",
-  icons: [
-    { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230D0D0D'/><text y='.9em' font-size='80' x='10'>🚲</text></svg>", sizes: "192x192", type: "image/svg+xml" }
-  ]
+  start_url: ".", display: "standalone",
+  background_color: "#0D0D0D", theme_color: "#0D0D0D",
+  icons: [{ src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230D0D0D'/><text y='.9em' font-size='80' x='10'>🚲</text></svg>", sizes: "192x192", type: "image/svg+xml" }]
 };
-const blob = new Blob([JSON.stringify(manifestData)], {type: 'application/json'});
-const link = document.createElement('link');
-link.rel = 'manifest';
-link.href = URL.createObjectURL(blob);
-document.head.appendChild(link);
+const _b = new Blob([JSON.stringify(manifestData)], {type:'application/json'});
+const _l = document.createElement('link'); _l.rel='manifest'; _l.href=URL.createObjectURL(_b);
+document.head.appendChild(_l);
 </script>
-
+ 
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230D0D0D'/><text y='.9em' font-size='80' x='10'>🚲</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
+ 
 <style>
   :root {
-    --green: #00C896;
-    --green-dark: #00A87E;
-    --bg: #0D0D0D;
-    --surface: #161616;
-    --surface2: #1E1E1E;
-    --border: #2A2A2A;
-    --text: #F5F5F5;
-    --text-muted: #888;
-    --red: #FF4D4D;
-    --yellow: #FFB800;
-    --blue: #4D9FFF;
+    --green: #00C896; --green-dark: #00A87E;
+    --bg: #0D0D0D; --surface: #161616; --surface2: #1E1E1E;
+    --border: #2A2A2A; --text: #F5F5F5; --text-muted: #888;
+    --red: #FF4D4D; --yellow: #FFB800;
   }
-
+ 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
   body {
-    background: var(--bg);
-    color: var(--text);
+    background: var(--bg); color: var(--text);
     font-family: 'DM Sans', sans-serif;
-    min-height: 100dvh;
-    padding: 0 0 80px;
-    overflow-x: hidden;
+    min-height: 100dvh; padding: 0 0 80px; overflow-x: hidden;
   }
-
+ 
   header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 18px 20px;
-    padding-top: calc(18px + env(safe-area-inset-top));
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 18px 20px; padding-top: calc(18px + env(safe-area-inset-top));
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
   }
-
+ 
   header h1 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
   header h1 span { color: var(--green); }
-
+ 
   .badge-count {
-    background: var(--green);
-    color: #000;
-    font-size: 12px;
-    font-weight: 700;
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: var(--green); color: #000; font-size: 12px; font-weight: 700;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
   }
-
-  .tabs {
-    display: flex;
-    padding: 16px 20px 0;
-    gap: 8px;
-    border-bottom: 1px solid var(--border);
-  }
-
+ 
+  .tabs { display: flex; padding: 16px 20px 0; gap: 8px; border-bottom: 1px solid var(--border); }
+ 
   .tab {
-    padding: 10px 18px;
-    border-radius: 8px 8px 0 0;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    color: var(--text-muted);
-    transition: all 0.2s;
+    padding: 10px 18px; border-radius: 8px 8px 0 0; font-size: 14px;
+    font-weight: 500; cursor: pointer; border: none; background: transparent;
+    color: var(--text-muted); transition: all 0.2s;
   }
-
+ 
   .tab.active {
-    background: var(--surface2);
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-bottom: 1px solid var(--surface2);
+    background: var(--surface2); color: var(--text);
+    border: 1px solid var(--border); border-bottom: 1px solid var(--surface2);
     margin-bottom: -1px;
   }
-
+ 
   .section { display: none; padding: 20px; }
   .section.active { display: block; }
-
+ 
   .form-group { margin-bottom: 16px; }
-
+ 
   label {
-    display: block;
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    display: block; font-size: 13px; color: var(--text-muted);
+    margin-bottom: 6px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.5px;
   }
-
-  input, select, textarea {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 16px;
-    font-size: 16px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    outline: none;
-    transition: border-color 0.2s;
-    -webkit-appearance: none;
+ 
+  input, select {
+    width: 100%; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; font-size: 16px; color: var(--text);
+    font-family: 'DM Sans', sans-serif; outline: none;
+    transition: border-color 0.2s; -webkit-appearance: none;
   }
-
-  input:focus, select:focus, textarea:focus { border-color: var(--green); }
-  input::placeholder, textarea::placeholder { color: var(--text-muted); }
-
-  textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
-
+ 
+  input:focus, select:focus { border-color: var(--green); }
+  input::placeholder { color: var(--text-muted); }
+ 
   .input-prefix { position: relative; }
   .input-prefix span {
     position: absolute; left: 16px; top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-muted); font-size: 16px;
+    transform: translateY(-50%); color: var(--text-muted); font-size: 16px;
   }
   .input-prefix input { padding-left: 32px; }
-
+ 
   .btn {
-    width: 100%; padding: 16px; border-radius: 12px;
-    font-size: 16px; font-weight: 700;
-    font-family: 'Syne', sans-serif;
-    cursor: pointer; border: none;
-    transition: all 0.2s; letter-spacing: 0.3px;
+    width: 100%; padding: 16px; border-radius: 12px; font-size: 16px;
+    font-weight: 700; font-family: 'Syne', sans-serif; cursor: pointer;
+    border: none; transition: all 0.2s; letter-spacing: 0.3px;
   }
-
+ 
   .btn-primary { background: var(--green); color: #000; }
   .btn-primary:active { background: var(--green-dark); transform: scale(0.98); }
   .btn-primary:disabled { background: var(--border); color: var(--text-muted); cursor: not-allowed; }
-
   .btn-danger  { background: transparent; border: 1px solid var(--red);   color: var(--red);   font-size: 14px; padding: 12px; }
   .btn-success { background: transparent; border: 1px solid var(--green); color: var(--green); font-size: 14px; padding: 12px; }
-
+ 
   .spinner {
-    width: 18px; height: 18px;
-    border: 2px solid rgba(0,0,0,0.3);
-    border-top-color: #000;
-    border-radius: 50%;
+    width: 18px; height: 18px; border: 2px solid rgba(0,0,0,0.3);
+    border-top-color: #000; border-radius: 50%;
     animation: spin 0.7s linear infinite;
     display: inline-block; vertical-align: middle; margin-right: 8px;
   }
-
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* RESULT CARD */
+ 
   .result-card {
     background: linear-gradient(135deg, #0D1F17, #111);
-    border: 1px solid var(--green-dark);
-    border-radius: 14px;
-    padding: 20px;
-    margin-top: 20px;
-    animation: slideUp 0.3s ease;
+    border: 1px solid var(--green-dark); border-radius: 14px;
+    padding: 20px; margin-top: 20px; animation: slideUp 0.3s ease;
   }
-
   @keyframes slideUp {
     from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-
   .result-card h3 { font-family: 'Syne', sans-serif; font-size: 15px; color: var(--green); margin-bottom: 12px; }
-
+ 
   .link-box {
     background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
     padding: 12px; font-size: 13px; color: var(--text-muted);
     word-break: break-all; margin-bottom: 12px; font-family: monospace;
   }
-
-  /* DEUX BOUTONS D'ENVOI */
-  .send-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-  .btn-send {
-    padding: 14px 10px; border: none; border-radius: 10px;
-    font-size: 15px; font-weight: 700; font-family: 'Syne', sans-serif;
-    cursor: pointer; display: flex; align-items: center;
-    justify-content: center; gap: 6px; transition: all 0.2s;
-  }
-
-  .btn-send-sms   { background: var(--green); color: #000; }
-  .btn-send-sms:active { background: var(--green-dark); }
-
-  .btn-send-mail  { background: var(--blue); color: #fff; }
-  .btn-send-mail:active { background: #3080dd; }
-
-  /* MESSAGE PREVIEW */
+ 
   .msg-preview {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin-bottom: 12px;
-    white-space: pre-wrap;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 14px; font-size: 13px;
+    color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;
+    white-space: pre-wrap; max-height: 180px; overflow-y: auto;
   }
-
+ 
+  /* BOUTONS COPIER */
+  .send-buttons { display: flex; flex-direction: column; gap: 10px; }
+ 
+  .btn-copy-msg {
+    width: 100%; padding: 15px; background: var(--green); color: #000;
+    border: none; border-radius: 10px; font-size: 16px; font-weight: 700;
+    font-family: 'Syne', sans-serif; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; transition: all 0.2s;
+  }
+  .btn-copy-msg:active { background: var(--green-dark); transform: scale(0.98); }
+ 
+  .btn-copy-link {
+    width: 100%; padding: 13px; background: transparent;
+    border: 1px solid var(--border); color: var(--text-muted);
+    border-radius: 10px; font-size: 14px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; transition: all 0.2s;
+  }
+  .btn-copy-link:active { border-color: var(--green); color: var(--green); }
+ 
+  .copy-hint {
+    font-size: 12px; color: var(--text-muted); text-align: center;
+    margin-top: 4px;
+  }
+ 
   /* CAUTIONS */
   .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
   .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
   .empty-state p { font-size: 15px; }
-
+ 
   .caution-card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 14px; padding: 16px; margin-bottom: 12px;
     animation: slideUp 0.3s ease; transition: opacity 0.3s;
   }
-
   .caution-card.loading { opacity: 0.4; pointer-events: none; }
-
+ 
   .caution-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
   .caution-name { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; }
   .caution-amount { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: var(--green); }
   .caution-meta { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; }
-
+ 
   .status-badge {
     display: inline-flex; align-items: center; gap: 5px;
     font-size: 12px; font-weight: 600; padding: 4px 10px;
     border-radius: 20px; margin-bottom: 10px;
   }
-
   .status-pending { background: rgba(255,184,0,0.15); color: var(--yellow); }
   .status-active  { background: rgba(0,200,150,0.15);  color: var(--green); }
   .status-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-
+ 
   .caution-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
-
+ 
   .btn-annuler {
-    grid-column: 1 / -1;
-    background: transparent; border: 1px solid var(--border);
-    color: var(--text-muted); font-size: 13px; padding: 11px;
-    border-radius: 10px; font-family: 'DM Sans', sans-serif;
-    cursor: pointer; width: 100%; transition: all 0.15s;
+    grid-column: 1 / -1; background: transparent; border: 1px solid var(--border);
+    color: var(--text-muted); font-size: 13px; padding: 11px; border-radius: 10px;
+    font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; transition: all 0.15s;
   }
   .btn-annuler:active { border-color: var(--red); color: var(--red); }
-
+ 
   .btn-actualiser {
     width: 100%; margin-top: 8px; background: transparent;
     border: 1px solid var(--border); color: var(--text-muted);
@@ -282,36 +213,35 @@ document.head.appendChild(link);
     font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.15s;
   }
   .btn-actualiser:active { border-color: var(--green); color: var(--green); }
-
+ 
   .timer { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
   .timer.urgent { color: var(--red); }
-
+ 
   .alert { padding: 14px 16px; border-radius: 10px; font-size: 14px; margin-bottom: 16px; }
   .alert-warning { background: rgba(255,184,0,0.1); border: 1px solid rgba(255,184,0,0.3); color: var(--yellow); }
   .alert-error   { background: rgba(255,77,77,0.1);  border: 1px solid rgba(255,77,77,0.3);  color: var(--red); }
   .alert-success { background: rgba(0,200,150,0.1);  border: 1px solid rgba(0,200,150,0.3);  color: var(--green); }
-
+ 
   .config-banner {
     background: linear-gradient(135deg, #1a2a1a, #0D1F17);
     border: 1px solid var(--green-dark); border-radius: 12px;
     padding: 16px; margin-bottom: 20px;
   }
   .config-banner p { font-size: 13px; color: var(--green); margin-bottom: 0; font-weight: 500; }
-
+ 
   .settings-group { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 20px; }
   .settings-item { padding: 16px; border-bottom: 1px solid var(--border); }
   .settings-item:last-child { border-bottom: none; }
   .settings-item label { text-transform: none; letter-spacing: 0; font-size: 14px; color: var(--text); margin-bottom: 8px; }
   .settings-hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
-
-  /* MODAL */
+ 
   .modal-overlay {
     position: fixed; inset: 0; background: rgba(0,0,0,0.8);
     z-index: 200; display: flex; align-items: flex-end;
     opacity: 0; pointer-events: none; transition: opacity 0.3s;
   }
   .modal-overlay.open { opacity: 1; pointer-events: all; }
-
+ 
   .modal {
     background: var(--surface); border-radius: 20px 20px 0 0;
     padding: 24px 20px calc(40px + env(safe-area-inset-bottom));
@@ -322,24 +252,22 @@ document.head.appendChild(link);
   .modal h2 { font-family: 'Syne', sans-serif; font-size: 18px; margin-bottom: 8px; }
   .modal p  { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
   .modal-actions { display: flex; flex-direction: column; gap: 10px; }
-
+ 
   .btn-cancel-modal {
     background: transparent; border: 1px solid var(--border);
     color: var(--text-muted); font-size: 15px; padding: 14px;
     border-radius: 12px; font-family: 'DM Sans', sans-serif; cursor: pointer;
   }
-
+ 
   #toast {
-    position: fixed;
-    bottom: calc(24px + env(safe-area-inset-bottom));
+    position: fixed; bottom: calc(24px + env(safe-area-inset-bottom));
     left: 50%; transform: translateX(-50%);
     background: var(--surface); padding: 14px 20px; border-radius: 12px;
     font-size: 14px; font-weight: 500; z-index: 999;
     max-width: 90vw; text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    animation: slideUp 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5); animation: slideUp 0.3s ease;
   }
-
+ 
   #install-banner {
     background: linear-gradient(135deg, #1a2a1a, #0D1F17);
     border-bottom: 1px solid var(--green-dark);
@@ -352,46 +280,45 @@ document.head.appendChild(link);
 </style>
 </head>
 <body>
-
+ 
 <div id="install-banner" style="display:none;">
   <p>📲 Ajouter à l'écran d'accueil ?</p>
   <button onclick="installerPWA()">Installer</button>
   <button class="close-banner" onclick="document.getElementById('install-banner').style.display='none'">✕</button>
 </div>
-
+ 
 <header>
   <h1>🚲 Caution <span>Vélo</span></h1>
   <div class="badge-count" id="badge">0</div>
 </header>
-
+ 
 <div class="tabs">
   <button class="tab active" onclick="showTab('nouvelle', event)">Nouvelle</button>
   <button class="tab" onclick="showTab('encours', event)">En cours</button>
   <button class="tab" onclick="showTab('config', event)">Config</button>
 </div>
-
+ 
 <!-- NOUVELLE CAUTION -->
 <div class="section active" id="tab-nouvelle">
-
   <div id="no-config-warning" class="alert alert-warning" style="margin-top:20px; display:none;">
     ⚠️ Configure ta clé Stripe dans l'onglet <strong>Config</strong> d'abord.
   </div>
-
+ 
   <div class="form-group" style="margin-top:20px;">
     <label>Nom du client</label>
     <input type="text" id="client-name" placeholder="Ex: Jean Dupont" autocomplete="off">
   </div>
-
+ 
   <div class="form-group">
-    <label>Téléphone (pour SMS)</label>
+    <label>Téléphone</label>
     <input type="tel" id="client-phone" placeholder="06 12 34 56 78">
   </div>
-
+ 
   <div class="form-group">
-    <label>Email (pour mail)</label>
+    <label>Email</label>
     <input type="email" id="client-email" placeholder="jean.dupont@email.com">
   </div>
-
+ 
   <div class="form-group">
     <label>Montant de la caution (€)</label>
     <div class="input-prefix">
@@ -399,30 +326,30 @@ document.head.appendChild(link);
       <input type="number" id="montant" placeholder="Ex: 200" min="1">
     </div>
   </div>
-
+ 
   <div class="form-group">
     <label>Description de la location</label>
     <input type="text" id="description-location" placeholder="Ex: 2 vélos électriques, 3 jours">
   </div>
-
+ 
   <button class="btn btn-primary" id="btn-generer" onclick="genererLien()">
     Générer le lien de caution
   </button>
-
+ 
   <div id="result" style="display:none;"></div>
 </div>
-
+ 
 <!-- EN COURS -->
 <div class="section" id="tab-encours">
   <div id="liste-cautions" style="margin-top:4px;"></div>
 </div>
-
+ 
 <!-- CONFIG -->
 <div class="section" id="tab-config">
   <div class="config-banner" style="margin-top:4px;">
     <p>🔑 Clé API Stripe nécessaire pour créer et gérer les cautions.</p>
   </div>
-
+ 
   <div class="settings-group" style="margin-top:16px;">
     <div class="settings-item">
       <label>Clé API Stripe (rk_live_... ou sk_live_...)</label>
@@ -435,18 +362,18 @@ document.head.appendChild(link);
       <p class="settings-hint">Apparaît dans les messages envoyés au client</p>
     </div>
   </div>
-
+ 
   <div class="alert alert-warning">
     🔒 Ta clé est stockée uniquement sur cet appareil, jamais envoyée ailleurs.
   </div>
-
+ 
   <div id="config-status"></div>
-
+ 
   <button class="btn btn-primary" onclick="testerConfig()" id="btn-test">
     Tester la connexion Stripe
   </button>
 </div>
-
+ 
 <!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
@@ -458,7 +385,7 @@ document.head.appendChild(link);
     </div>
   </div>
 </div>
-
+ 
 <script>
 // ─── PWA ─────────────────────────────────────────────────────
 let deferredPrompt = null;
@@ -474,29 +401,29 @@ function installerPWA() {
     document.getElementById('install-banner').style.display = 'none';
   });
 }
-
+ 
 // ─── STATE ────────────────────────────────────────────────────
 let cautions = JSON.parse(localStorage.getItem('cautions') || '[]');
 let pendingAction = null, pendingCautionId = null;
-
+ 
 // ─── CONFIG ──────────────────────────────────────────────────
 function loadConfig() {
   document.getElementById('stripe-key').value = localStorage.getItem('stripe_key') || '';
   document.getElementById('shop-name').value  = localStorage.getItem('shop_name')  || '';
   updateNoConfigWarning();
 }
-
+ 
 function saveConfig() {
   localStorage.setItem('stripe_key', document.getElementById('stripe-key').value.trim());
   localStorage.setItem('shop_name',  document.getElementById('shop-name').value.trim());
   updateNoConfigWarning();
 }
-
+ 
 function updateNoConfigWarning() {
   const key = localStorage.getItem('stripe_key') || '';
   document.getElementById('no-config-warning').style.display = key ? 'none' : 'block';
 }
-
+ 
 async function testerConfig() {
   const key = document.getElementById('stripe-key').value.trim();
   if (!key) { showConfigStatus('error', 'Entre ta clé Stripe d\'abord.'); return; }
@@ -511,21 +438,21 @@ async function testerConfig() {
   btn.innerHTML = 'Tester la connexion Stripe';
   btn.disabled = false;
 }
-
+ 
 function showConfigStatus(type, msg) {
   document.getElementById('config-status').innerHTML =
     `<div class="alert alert-${type === 'success' ? 'success' : 'error'}">${msg}</div>`;
 }
-
+ 
 // ─── STRIPE HELPERS ──────────────────────────────────────────
 function getKey() { return localStorage.getItem('stripe_key') || ''; }
-
+ 
 function stripeGet(path, key) {
   return fetch(`https://api.stripe.com/v1/${path}`, {
     headers: { 'Authorization': 'Bearer ' + (key || getKey()) }
   });
 }
-
+ 
 function stripePost(path, body) {
   return fetch(`https://api.stripe.com/v1/${path}`, {
     method: 'POST',
@@ -533,7 +460,7 @@ function stripePost(path, body) {
     body
   });
 }
-
+ 
 // ─── TABS ─────────────────────────────────────────────────────
 function showTab(name, evt) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -542,7 +469,7 @@ function showTab(name, evt) {
   if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
   if (name === 'encours') renderCautions();
 }
-
+ 
 // ─── GÉNÉRER LIEN ─────────────────────────────────────────────
 async function genererLien() {
   const key   = getKey();
@@ -552,111 +479,137 @@ async function genererLien() {
   const email = document.getElementById('client-email').value.trim();
   const montant = parseFloat(document.getElementById('montant').value);
   const description = document.getElementById('description-location').value.trim() || 'location de vélo';
-
-  if (!key)               { showTab('config', null); return; }
-  if (!name)              { alert('Entre le nom du client'); return; }
+ 
+  if (!key)  { showTab('config', null); return; }
+  if (!name) { alert('Entre le nom du client'); return; }
   if (!montant || montant < 1) { alert('Entre un montant valide'); return; }
-
+ 
   const btn = document.getElementById('btn-generer');
   btn.innerHTML = '<span class="spinner"></span> Création en cours...';
   btn.disabled = true;
   document.getElementById('result').style.display = 'none';
-
+ 
   try {
+    // Description rassurante visible sur la page Stripe
+    const msgStripe = `⚠️ Il ne s'agit PAS d'un débit. C'est une empreinte bancaire valable pendant la durée de votre location chez ${shop} (${description}). Elle sera intégralement annulée lors du retour du matériel en bon état. Aucune somme ne sera prélevée sauf en cas de dommage constaté.`;
+ 
     const prodRes = await stripePost('products',
-      `name=Caution+${encodeURIComponent(description)}+-+${encodeURIComponent(name)}`);
+      `name=Caution+${encodeURIComponent(description)}+-+${encodeURIComponent(name)}&description=${encodeURIComponent(msgStripe)}`);
     const prod = await prodRes.json();
     if (!prodRes.ok) throw new Error(prod.error?.message);
-
+ 
     const priceRes = await stripePost('prices',
       `unit_amount=${Math.round(montant * 100)}&currency=eur&product=${prod.id}`);
     const price = await priceRes.json();
     if (!priceRes.ok) throw new Error(price.error?.message);
-
+ 
     const linkRes = await stripePost('payment_links',
       `line_items[0][price]=${price.id}&line_items[0][quantity]=1&payment_intent_data[capture_method]=manual`);
     const link = await linkRes.json();
     if (!linkRes.ok) throw new Error(link.error?.message);
-
+ 
     const caution = {
       id: Date.now().toString(),
-      paymentLinkId: link.id,
-      url: link.url,
-      client: name, phone, email,
-      montant, description,
-      date: new Date().toISOString(),
-      status: 'pending',
-      paymentIntentId: null
+      paymentLinkId: link.id, url: link.url,
+      client: name, phone, email, montant, description,
+      date: new Date().toISOString(), status: 'pending', paymentIntentId: null
     };
-
+ 
     cautions.push(caution);
     saveCautions(); updateBadge();
     afficherResultat(caution, shop);
-
+ 
     document.getElementById('client-name').value = '';
     document.getElementById('client-phone').value = '';
     document.getElementById('client-email').value = '';
     document.getElementById('montant').value = '';
     document.getElementById('description-location').value = '';
-
+ 
   } catch(err) {
     document.getElementById('result').innerHTML =
       `<div class="alert alert-error" style="margin-top:16px">❌ ${err.message}</div>`;
     document.getElementById('result').style.display = 'block';
   }
-
+ 
   btn.innerHTML = 'Générer le lien de caution';
   btn.disabled = false;
 }
-
+ 
 // ─── MESSAGE CLIENT ───────────────────────────────────────────
 function getMessage(caution, shop) {
   return `Bonjour ${caution.client},
-
+ 
 Dans le cadre de votre location chez ${shop} (${caution.description}), nous vous demandons de déposer une empreinte bancaire de ${caution.montant} €.
-
+ 
 ⚠️ Il ne s'agit PAS d'un paiement : aucune somme ne sera débitée de votre compte. C'est uniquement une autorisation temporaire qui garantit la location, comme le font les hôtels.
-
-La somme sera intégralement libérée à la restitution du matériel en bon état.
-
+ 
+L'empreinte sera intégralement annulée lors du retour du matériel en bon état.
+ 
 👉 Lien sécurisé Stripe :
 ${caution.url}
-
+ 
 Pour toute question, n'hésitez pas à nous contacter.
 ${shop}`;
 }
-
+ 
+// ─── AFFICHER RÉSULTAT ────────────────────────────────────────
 function afficherResultat(caution, shop) {
   const msg = getMessage(caution, shop);
-  const sujet = `Caution location vélo – ${shop}`;
-
+ 
   document.getElementById('result').innerHTML = `
     <div class="result-card">
       <h3>✅ Lien créé pour ${caution.client}</h3>
       <div class="link-box">${caution.url}</div>
       <div class="msg-preview">${msg}</div>
       <div class="send-buttons">
-        <button class="btn-send btn-send-sms" onclick="ouvrirSms('${caution.phone}', ${JSON.stringify(encodeURIComponent(msg))})">
-          📱 SMS
+        <button class="btn-copy-msg" onclick="copierMessage(this, ${JSON.stringify(msg)})">
+          📋 Copier le message complet
         </button>
-        <button class="btn-send btn-send-mail" onclick="ouvrirMail('${caution.email}', ${JSON.stringify(encodeURIComponent(sujet))}, ${JSON.stringify(encodeURIComponent(msg))})">
-          📧 Mail
+        <button class="btn-copy-link" onclick="copierLien(this, '${caution.url}')">
+          🔗 Copier uniquement le lien
         </button>
       </div>
+      <p class="copy-hint" style="margin-top:10px;">Colle ensuite dans ton mail, SMS ou WhatsApp</p>
     </div>`;
   document.getElementById('result').style.display = 'block';
 }
-
-function ouvrirSms(phone, encodedMsg) {
-  if (!phone) { alert('Entre le numéro de téléphone du client d\'abord'); return; }
-  window.location.href = `sms:${phone}?body=${encodedMsg}`;
+ 
+// ─── COPIER ──────────────────────────────────────────────────
+async function copierMessage(btn, msg) {
+  try {
+    await navigator.clipboard.writeText(msg);
+    btn.textContent = '✅ Message copié !';
+    setTimeout(() => btn.innerHTML = '📋 Copier le message complet', 2500);
+    showToast('📋 Message copié — colle-le dans ton mail ou SMS', 'success');
+  } catch(e) {
+    // Fallback si clipboard API bloquée
+    const ta = document.createElement('textarea');
+    ta.value = msg; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    btn.textContent = '✅ Message copié !';
+    setTimeout(() => btn.innerHTML = '📋 Copier le message complet', 2500);
+    showToast('📋 Message copié !', 'success');
+  }
 }
-
-function ouvrirMail(email, encodedSujet, encodedMsg) {
-  const dest = email || '';
-  window.location.href = `mailto:${dest}?subject=${encodedSujet}&body=${encodedMsg}`;
+ 
+async function copierLien(btn, url) {
+  try {
+    await navigator.clipboard.writeText(url);
+    btn.textContent = '✅ Lien copié !';
+    setTimeout(() => btn.innerHTML = '🔗 Copier uniquement le lien', 2500);
+    showToast('🔗 Lien copié !', 'success');
+  } catch(e) {
+    const ta = document.createElement('textarea');
+    ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    btn.textContent = '✅ Lien copié !';
+    setTimeout(() => btn.innerHTML = '🔗 Copier uniquement le lien', 2500);
+    showToast('🔗 Lien copié !', 'success');
+  }
 }
-
+ 
 // ─── RÉCUPÉRER PAYMENT INTENT ────────────────────────────────
 async function recupererPaymentIntent(caution) {
   try {
@@ -665,7 +618,7 @@ async function recupererPaymentIntent(caution) {
     const data = await res.json();
     const montantCentimes = Math.round(caution.montant * 100);
     const dateCreation    = new Date(caution.date).getTime();
-
+ 
     const pi = data.data?.find(p => {
       if (p.amount !== montantCentimes) return false;
       if (!['requires_capture', 'succeeded', 'canceled'].includes(p.status)) return false;
@@ -674,7 +627,7 @@ async function recupererPaymentIntent(caution) {
       if (p.metadata?.payment_link === caution.paymentLinkId) return true;
       return (piDate - dateCreation) < 7 * 24 * 3600 * 1000;
     });
-
+ 
     if (pi) {
       caution.paymentIntentId = pi.id;
       caution.status = pi.status === 'requires_capture' ? 'active' : caution.status;
@@ -683,7 +636,7 @@ async function recupererPaymentIntent(caution) {
   } catch(e) { console.error(e); }
   return null;
 }
-
+ 
 // ─── RENDER CAUTIONS ─────────────────────────────────────────
 function renderCautions() {
   const el = document.getElementById('liste-cautions');
@@ -691,9 +644,9 @@ function renderCautions() {
     el.innerHTML = `<div class="empty-state"><div class="icon">🔐</div><p>Aucune caution en cours.<br>Crée-en une dans l'onglet "Nouvelle".</p></div>`;
     return;
   }
-
+ 
   const sorted = [...cautions].sort((a, b) => new Date(b.date) - new Date(a.date));
-
+ 
   el.innerHTML = sorted.map(c => {
     const dateStr = new Date(c.date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
     const heures = getHeuresRestantes(c.date);
@@ -702,7 +655,7 @@ function renderCautions() {
     const statusBadge = c.status === 'active'
       ? `<span class="status-badge status-active"><span class="status-dot"></span>Empreinte validée ✓</span>`
       : `<span class="status-badge status-pending"><span class="status-dot"></span>En attente du client</span>`;
-
+ 
     return `
       <div class="caution-card" id="card-${c.id}">
         <div class="caution-header">
@@ -727,12 +680,12 @@ function renderCautions() {
       </div>`;
   }).join('');
 }
-
+ 
 function getHeuresRestantes(dateStr) {
   const expiry = new Date(new Date(dateStr).getTime() + 7 * 24 * 3600 * 1000);
   return Math.max(0, Math.round((expiry - new Date()) / 3600000));
 }
-
+ 
 async function actualiserStatut(cautionId) {
   const caution = cautions.find(c => c.id === cautionId);
   if (!caution) return;
@@ -744,12 +697,12 @@ async function actualiserStatut(cautionId) {
   else if (pi) showToast('Statut actualisé.', 'neutral');
   else showToast('Le client n\'a pas encore validé.', 'warning');
 }
-
+ 
 function setCardLoading(id, state) {
   const card = document.getElementById('card-' + id);
   if (card) card.classList.toggle('loading', state);
 }
-
+ 
 // ─── MODAL ───────────────────────────────────────────────────
 function demanderAction(action, cautionId) {
   pendingAction = action; pendingCautionId = cautionId;
@@ -765,12 +718,12 @@ function demanderAction(action, cautionId) {
   document.getElementById('modal-confirm-btn').textContent = cfg.btnText;
   document.getElementById('modal-overlay').classList.add('open');
 }
-
+ 
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
   pendingAction = null; pendingCautionId = null;
 }
-
+ 
 async function confirmerAction() {
   const action = pendingAction, cautionId = pendingCautionId;
   closeModal();
@@ -785,14 +738,14 @@ async function confirmerAction() {
   else if (action === 'liberer')  await libererCaution(caution);
   else if (action === 'annuler')  await annulerEmpreinte(caution);
 }
-
+ 
 async function encaisserCaution(caution) {
   if (!caution.paymentIntentId) { showToast('⚠️ Empreinte pas encore validée. Actualise le statut.', 'error'); return; }
   const res = await stripePost(`payment_intents/${caution.paymentIntentId}/capture`, '');
   if (res.ok) { supprimerCaution(caution.id); showToast('💰 Caution encaissée !', 'success'); }
   else { const e = await res.json(); showToast('❌ ' + (e.error?.message || 'Erreur Stripe'), 'error'); }
 }
-
+ 
 async function libererCaution(caution) {
   if (!caution.paymentIntentId) {
     await desactiverLien(caution.paymentLinkId);
@@ -804,27 +757,27 @@ async function libererCaution(caution) {
   supprimerCaution(caution.id);
   showToast(res.ok ? '✅ Caution libérée, argent débloqué !' : '✅ Supprimé localement.', res.ok ? 'success' : 'warning');
 }
-
+ 
 async function annulerEmpreinte(caution) {
   await desactiverLien(caution.paymentLinkId);
   if (caution.paymentIntentId) await stripePost(`payment_intents/${caution.paymentIntentId}/cancel`, '');
   supprimerCaution(caution.id);
   showToast('🚫 Empreinte annulée.', 'success');
 }
-
+ 
 async function desactiverLien(linkId) {
   if (!linkId) return;
   try { await stripePost(`payment_links/${linkId}`, 'active=false'); } catch(e) {}
 }
-
+ 
 function supprimerCaution(id) {
   cautions = cautions.filter(c => c.id !== id);
   saveCautions(); updateBadge(); renderCautions();
 }
-
+ 
 function saveCautions()  { localStorage.setItem('cautions', JSON.stringify(cautions)); }
 function updateBadge()   { document.getElementById('badge').textContent = cautions.length; }
-
+ 
 function showToast(msg, type = 'success') {
   const existing = document.getElementById('toast');
   if (existing) existing.remove();
@@ -835,7 +788,7 @@ function showToast(msg, type = 'success') {
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), 3500);
 }
-
+ 
 loadConfig();
 updateBadge();
 </script>
